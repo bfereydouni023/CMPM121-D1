@@ -35,13 +35,19 @@ bubbleButton.ariaLabel = "Pop the bubble";
 const upgradeButton = document.createElement("button");
 upgradeButton.type = "button";
 upgradeButton.className = "upgrade-button";
-upgradeButton.textContent =
-  `Buy an auto bubble popper (+1/s) — Level ${upgradeLevel}`;
+upgradeButton.textContent = "Buy an auto bubble popper (+1/s)";
 upgradeButton.disabled = true;
+
+const upgradeStatus = document.createElement("p");
+upgradeStatus.className = "upgrade-status";
 
 const updateUpgradeButton = () => {
   upgradeButton.disabled = pops < 10;
+  upgradeButton.textContent =
+    `Buy an auto bubble popper (+1/s) — Level ${upgradeLevel}`;
 };
+
+updateUpgradeButton();
 
 //incremenet counter when bubble button is clicked, update upgrade button to track when enough bubbles are collected to unlock button
 bubbleButton.addEventListener("click", () => {
@@ -68,6 +74,7 @@ const growContinuously = (timestamp: number) => {
 requestAnimationFrame(growContinuously);
 
 //add upgrade button, make it so it costs 10 bubble pops
+
 upgradeButton.addEventListener("click", () => {
   if (pops < 10) return;
 
@@ -79,7 +86,14 @@ upgradeButton.addEventListener("click", () => {
 });
 
 //append the button, title and subtitle texts to the main element created prior
-app.append(title, subtitle, counter, bubbleButton, upgradeButton);
+app.append(
+  title,
+  subtitle,
+  counter,
+  bubbleButton,
+  upgradeButton,
+  upgradeStatus,
+);
 
 //add the widget containing the button and titles to the page
 document.body.innerHTML = "";
