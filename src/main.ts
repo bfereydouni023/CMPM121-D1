@@ -51,10 +51,20 @@ type Upgrade = {
 
 // Config for the three available upgrades (A, B, C) with their costs and rates
 const upgradeConfigs = [
-  { id: "A", name: "Hire a friend!", cost: 10, rate: 0.1 },
-  { id: "B", name: "Auto Bubble Popper (TM)", cost: 100, rate: 2.0 },
   {
-    id: "C",
+    id: "Hire a friend!",
+    name: "Bubble popping is so fun, why do it alone?",
+    cost: 10,
+    rate: 0.1,
+  },
+  {
+    id: "Auto Bubble Popper (TM)",
+    name: "Bikini Bottom Motor Company's newest product!",
+    cost: 100,
+    rate: 2.0,
+  },
+  {
+    id: "UNLEASH THE SPONGE!",
     name: "Hire SpongeBob, the bubble popper GOAT",
     cost: 1000,
     rate: 50,
