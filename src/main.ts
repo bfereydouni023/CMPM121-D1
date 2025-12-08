@@ -38,6 +38,7 @@ bubbleButton.className = "bubble-button";
 bubbleButton.textContent = "🫧";
 bubbleButton.ariaLabel = "Pop the bubble";
 
+//Shape for each upgrade option so costs, rates, and UI stay grouped together
 type Upgrade = {
   id: string;
   name: string;
@@ -48,6 +49,7 @@ type Upgrade = {
   statusLine: HTMLLIElement;
 };
 
+// Config for the three available upgrades (A, B, C) with their costs and rates
 const upgradeConfigs = [
   { id: "A", name: "Hire a friend!", cost: 10, rate: 0.1 },
   { id: "B", name: "Auto Bubble Popper (TM)", cost: 100, rate: 2.0 },
@@ -59,6 +61,7 @@ const upgradeConfigs = [
   },
 ];
 
+// Build upgrade objects with buttons and status lines for display/purchasing
 const upgrades: Upgrade[] = upgradeConfigs.map((config) => {
   const button = document.createElement("button");
   button.type = "button";
@@ -75,6 +78,7 @@ const upgrades: Upgrade[] = upgradeConfigs.map((config) => {
   };
 });
 
+// Sum the contribution from all owned upgrades to update the passive growth rate
 const recalculateGrowthRate = () => {
   growthRate = upgrades.reduce(
     (total, upgrade) => total + upgrade.count * upgrade.rate,
@@ -83,17 +87,22 @@ const recalculateGrowthRate = () => {
   updateRateDisplay();
 };
 
+// Refresh upgrade button labels and disabled state based on current bubbles owned
 const updateUpgradeButtons = () => {
   upgrades.forEach((upgrade) => {
     upgrade.button.disabled = pops < upgrade.cost;
+    const formattedCost = upgrade.cost.toFixed(1);
     upgrade.button.textContent =
-      `${upgrade.id} — ${upgrade.name} | Cost: ${upgrade.cost} bubbles (+${upgrade.rate} bubbles/sec) | Owned: ${upgrade.count}`;
+      `${upgrade.id} — ${upgrade.name} | Cost: ${formattedCost} bubbles (+${upgrade.rate} bubbles/sec) | Owned: ${upgrade.count}`;
+    //`${upgrade.id} — ${upgrade.name} | Cost: ${upgrade.cost} bubbles (+${upgrade.rate} bubbles/sec) | Owned: ${upgrade.count}`;
   });
 };
 
+// List that summarizes how many of each upgrade the player owns
 const statusList = document.createElement("ul");
 statusList.className = "upgrade-status";
 
+// Update function to keep the owned-count status list in sync with purchases
 const updateStatusList = () => {
   upgrades.forEach((upgrade) => {
     upgrade.statusLine.textContent =
@@ -101,12 +110,14 @@ const updateStatusList = () => {
   });
 };
 
+//logic for what should happen when an upgrade is clicked
 upgrades.forEach((upgrade) => {
   upgrade.button.addEventListener("click", () => {
     if (pops < upgrade.cost) return;
 
     pops -= upgrade.cost;
     upgrade.count += 1;
+    upgrade.cost *= 1.15;
     recalculateGrowthRate();
     updateCounter();
     updateStatusList();
