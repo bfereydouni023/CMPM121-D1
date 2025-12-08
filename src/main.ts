@@ -13,8 +13,10 @@ const subtitle = document.createElement("p");
 subtitle.className = "subtitle";
 subtitle.textContent = "Tap the bubble to start popping!";
 
-//set up counter variable and bubble popped counter text
+//set up counter variable, growth rate and bubble popped counter text
 let pops = 0;
+let growthRate = 0;
+let upgradeLevel = 0;
 const counter = document.createElement("div");
 counter.className = "counter";
 const updateCounter = () => {
@@ -29,10 +31,23 @@ bubbleButton.className = "bubble-button";
 bubbleButton.textContent = "🫧";
 bubbleButton.ariaLabel = "Pop the bubble";
 
-//incremenet counter when bubble button is clicked
+//upgrade button that increases automatic growth rate
+const upgradeButton = document.createElement("button");
+upgradeButton.type = "button";
+upgradeButton.className = "upgrade-button";
+upgradeButton.textContent =
+  `Buy an auto bubble popper (+1/s) — Level ${upgradeLevel}`;
+upgradeButton.disabled = true;
+
+const updateUpgradeButton = () => {
+  upgradeButton.disabled = pops < 10;
+};
+
+//incremenet counter when bubble button is clicked, update upgrade button to track when enough bubbles are collected to unlock button
 bubbleButton.addEventListener("click", () => {
   pops += 1;
   updateCounter();
+  updateUpgradeButton();
 });
 
 //increment counter automatically based on elapsed time per animation frame
@@ -41,8 +56,9 @@ let lastTimestamp: number | null = null;
 const growContinuously = (timestamp: number) => {
   if (lastTimestamp !== null) {
     const deltaSeconds = (timestamp - lastTimestamp) / 1000;
-    pops += deltaSeconds;
+    pops += deltaSeconds * growthRate;
     updateCounter();
+    updateUpgradeButton();
   }
 
   lastTimestamp = timestamp;
@@ -51,8 +67,19 @@ const growContinuously = (timestamp: number) => {
 
 requestAnimationFrame(growContinuously);
 
+//add upgrade button, make it so it costs 10 bubble pops
+upgradeButton.addEventListener("click", () => {
+  if (pops < 10) return;
+
+  pops -= 10;
+  growthRate += 1;
+  upgradeLevel += 1;
+  updateCounter();
+  updateUpgradeButton();
+});
+
 //append the button, title and subtitle texts to the main element created prior
-app.append(title, subtitle, counter, bubbleButton);
+app.append(title, subtitle, counter, bubbleButton, upgradeButton);
 
 //add the widget containing the button and titles to the page
 document.body.innerHTML = "";
