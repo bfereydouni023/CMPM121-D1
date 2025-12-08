@@ -17,7 +17,11 @@ subtitle.textContent = "Tap the bubble to start popping!";
 let pops = 0;
 const counter = document.createElement("div");
 counter.className = "counter";
-counter.textContent = `Bubbles popped: ${pops}`;
+//counter.textContent = `Bubbles popped: ${pops}`;
+const updateCounter = () => {
+  counter.textContent = `Bubbles popped: ${pops}`;
+};
+updateCounter();
 
 //creates the clickable bubble button
 const bubbleButton = document.createElement("button");
@@ -29,8 +33,15 @@ bubbleButton.ariaLabel = "Pop the bubble";
 //incremenet counter when bubble button is clicked
 bubbleButton.addEventListener("click", () => {
   pops += 1;
-  counter.textContent = `Bubbles popped: ${pops}`;
+  //counter.textContent = `Bubbles popped: ${pops}`;
+  updateCounter();
 });
+
+//increment counter automatically every second
+setInterval(() => {
+  pops += 1;
+  updateCounter();
+}, 1000);
 
 //append the button, title and subtitle texts to the main element created prior
 app.append(title, subtitle, counter, bubbleButton);
