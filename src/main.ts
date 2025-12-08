@@ -17,9 +17,8 @@ subtitle.textContent = "Tap the bubble to start popping!";
 let pops = 0;
 const counter = document.createElement("div");
 counter.className = "counter";
-//counter.textContent = `Bubbles popped: ${pops}`;
 const updateCounter = () => {
-  counter.textContent = `Bubbles popped: ${pops}`;
+  counter.textContent = `Bubbles popped: ${pops.toFixed(1)}`; //makes the number of bubbles only show up to the tenth position
 };
 updateCounter();
 
@@ -33,15 +32,24 @@ bubbleButton.ariaLabel = "Pop the bubble";
 //incremenet counter when bubble button is clicked
 bubbleButton.addEventListener("click", () => {
   pops += 1;
-  //counter.textContent = `Bubbles popped: ${pops}`;
   updateCounter();
 });
 
-//increment counter automatically every second
-setInterval(() => {
-  pops += 1;
-  updateCounter();
-}, 1000);
+//increment counter automatically based on elapsed time per animation frame
+let lastTimestamp: number | null = null;
+
+const growContinuously = (timestamp: number) => {
+  if (lastTimestamp !== null) {
+    const deltaSeconds = (timestamp - lastTimestamp) / 1000;
+    pops += deltaSeconds;
+    updateCounter();
+  }
+
+  lastTimestamp = timestamp;
+  requestAnimationFrame(growContinuously);
+};
+
+requestAnimationFrame(growContinuously);
 
 //append the button, title and subtitle texts to the main element created prior
 app.append(title, subtitle, counter, bubbleButton);
