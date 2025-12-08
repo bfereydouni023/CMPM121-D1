@@ -49,7 +49,7 @@ type Upgrade = {
   statusLine: HTMLLIElement;
 };
 
-// Config for the three available upgrades (A, B, C) with their costs and rates
+// Config for the three available upgrades with their costs and rates
 const upgradeConfigs = [
   {
     id: "Hire a friend!",
@@ -104,7 +104,6 @@ const updateUpgradeButtons = () => {
     const formattedCost = upgrade.cost.toFixed(1);
     upgrade.button.textContent =
       `${upgrade.id} — ${upgrade.name} | Cost: ${formattedCost} bubbles (+${upgrade.rate} bubbles/sec) | Owned: ${upgrade.count}`;
-    //`${upgrade.id} — ${upgrade.name} | Cost: ${upgrade.cost} bubbles (+${upgrade.rate} bubbles/sec) | Owned: ${upgrade.count}`;
   });
 };
 
