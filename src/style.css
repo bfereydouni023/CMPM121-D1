@@ -1,52 +1,74 @@
+/*import font for text*/
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap");
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 * {
   box-sizing: border-box;
 }
 
-/*the webpage background set up, center the button */
+/*setting up background and centering the button click menu*/
 body {
   margin: 0;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 20% 20%, #cef3ea, #6582ad);
+  background: radial-gradient(circle at 20% 20%, #e4f2f8, #7caaac);
   color: #0f172a;
   font-family: "Fredoka", "Inter", system-ui, -apple-system, sans-serif;
 }
 
-/*style the bubble button, making it hover/pop up out of page */
+/*Customizing the background of box containing the bubble button */
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px;
+  border-radius: 24px;
+  background: radial-gradient(circle at 20% 20%, #22f0bc, #7a9fc9);
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.12);
+  text-align: center;
+}
+
+/*color of subtitle text*/
+.subtitle {
+  margin: 0;
+  color: #475569;
+}
+
+/*counter text's settings*/
+.counter {
+  margin: 8px 0 0;
+  font-weight: 600;
+}
+
+/*bubble clickable button settings*/
 .bubble-button {
-  width: 140px;
-  height: 140px;
+  margin-top: 6px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   border: none;
-  background: radial-gradient(
-    circle at 30% 30%,
-    #ffffff,
-    #6e98b3
-  ); /*darkened the background to make the button contrast better */
+  background: radial-gradient(circle at 30% 30%, #dfc3eb, #9edaff);
   color: #0f172a;
-  font-size: 54px;
+  font-size: 48px;
   cursor: pointer;
-  box-shadow: 0 14px 36px rgba(49, 130, 206, 0.35);
+  box-shadow: 0 12px 30px rgba(250, 213, 2, 0.35);
   transition: transform 120ms ease, box-shadow 120ms ease;
 }
 
-/*makes the button rise up when the cursor hovers over it*/
+/*make the button rise up when mouse hovers over it*/
 .bubble-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(49, 130, 206, 0.4);
+  box-shadow: 0 16px 34px rgba(49, 130, 206, 0.4);
 }
 
-/*make button "press down" when clicked */
-.bubble-button:active,
-.bubble-button.bubble-pop {
-  transform: translateY(1px) scale(0.97);
-  box-shadow: 0 12px 30px rgba(247, 149, 3, 0.32);
+/*make button have a "press down" effect when clicked*/
+.bubble-button:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 10px 24px rgba(49, 130, 206, 0.32);
 }
