@@ -41,7 +41,7 @@ bubbleButton.ariaLabel = "Pop the bubble";
 //Shape for each upgrade option so costs, rates, and UI stay grouped together
 type Upgrade = {
   id: string;
-  name: string;
+  description: string;
   cost: number;
   rate: number;
   count: number;
@@ -53,21 +53,35 @@ type Upgrade = {
 const upgradeConfigs = [
   {
     id: "Hire a friend!",
-    name: "Bubble popping is so fun, why do it alone?",
+    description: "Bubble popping is so fun, why do it alone?",
     cost: 10,
     rate: 0.1,
   },
   {
     id: "Auto Bubble Popper (TM)",
-    name: "Bikini Bottom Motor Company's newest product!",
+    description: "Bikini Bottom Motor Company's newest product!",
     cost: 100,
     rate: 2.0,
   },
   {
-    id: "UNLEASH THE SPONGE!",
-    name: "Hire SpongeBob, the bubble popper GOAT",
+    id: "Bubblenaut Crew",
+    description:
+      "Elite pirates that chart the seven seas, annihilating bubbles they find.",
     cost: 1000,
     rate: 50,
+  },
+  {
+    id: "Bubble Bot 3000",
+    description:
+      "A turbo-charged robot that shreds through bubbles around the clock. Proudly produced by K & P Company",
+    cost: 5000,
+    rate: 125,
+  },
+  {
+    id: "UNLEASH THE SPONGE!",
+    description: "Hire SpongeBob, the bubble popper GOAT",
+    cost: 20000,
+    rate: 600,
   },
 ];
 
@@ -103,7 +117,7 @@ const updateUpgradeButtons = () => {
     upgrade.button.disabled = pops < upgrade.cost;
     const formattedCost = upgrade.cost.toFixed(1);
     upgrade.button.textContent =
-      `${upgrade.id} — ${upgrade.name} | Cost: ${formattedCost} bubbles (+${upgrade.rate} bubbles/sec) | Owned: ${upgrade.count}`;
+      `${upgrade.id} — ${upgrade.description} | Cost: ${formattedCost} bubbles (+${upgrade.rate} bubbles/sec) | Owned: ${upgrade.count}`;
   });
 };
 
@@ -115,7 +129,7 @@ statusList.className = "upgrade-status";
 const updateStatusList = () => {
   upgrades.forEach((upgrade) => {
     upgrade.statusLine.textContent =
-      `${upgrade.id} (${upgrade.name}): ${upgrade.count}`;
+      `${upgrade.id} (${upgrade.description}): ${upgrade.count}`;
   });
 };
 
