@@ -1,5 +1,52 @@
-.icon {
-  width: 64px;
-  vertical-align: top;
-  border: 1px solid salmon;
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap");
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/*the webpage background set up, center the button */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 20% 20%, #cef3ea, #6582ad);
+  color: #0f172a;
+  font-family: "Fredoka", "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/*style the bubble button, making it hover/pop up out of page */
+.bubble-button {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: none;
+  background: radial-gradient(
+    circle at 30% 30%,
+    #ffffff,
+    #6e98b3
+  ); /*darkened the background to make the button contrast better */
+  color: #0f172a;
+  font-size: 54px;
+  cursor: pointer;
+  box-shadow: 0 14px 36px rgba(49, 130, 206, 0.35);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+/*makes the button rise up when the cursor hovers over it*/
+.bubble-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(49, 130, 206, 0.4);
+}
+
+/*make button "press down" when clicked */
+.bubble-button:active,
+.bubble-button.bubble-pop {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 12px 30px rgba(49, 130, 206, 0.32);
 }
