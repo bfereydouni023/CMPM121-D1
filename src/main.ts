@@ -14,12 +14,12 @@ subtitle.className = "subtitle";
 subtitle.textContent = "Tap the bubble to start popping!";
 
 //set up counter variable, growth rate and bubble popped counter text
-let pops = 0;
-let growthRate = 0;
+let gameCurrency = 0;
+let passiveIncomeRate = 0;
 const counter = document.createElement("div");
 counter.className = "counter";
 const updateCounter = () => {
-  counter.textContent = `Bubbles popped: ${pops.toFixed(1)}`; //makes the number of bubbles only show up to the tenth position
+  counter.textContent = `Bubbles popped: ${gameCurrency.toFixed(1)}`; //makes the number of bubbles only show up to the tenth position
 };
 updateCounter();
 
@@ -27,16 +27,16 @@ updateCounter();
 const rateDisplay = document.createElement("p");
 rateDisplay.className = "rate-display";
 const updateRateDisplay = () => {
-  rateDisplay.textContent = `Growth rate: ${growthRate.toFixed(1)} bubbles/sec`;
+  rateDisplay.textContent = `Growth rate: ${passiveIncomeRate.toFixed(1)} bubbles/sec`;
 };
 updateRateDisplay();
 
 //creates the clickable bubble button
-const bubbleButton = document.createElement("button");
-bubbleButton.type = "button";
-bubbleButton.className = "bubble-button";
-bubbleButton.textContent = "🫧";
-bubbleButton.ariaLabel = "Pop the bubble";
+const mainActionButton = document.createElement("button");
+mainActionButton.type = "button";
+mainActionButton.className = "bubble-button";
+mainActionButton.textContent = "🫧";
+mainActionButton.ariaLabel = "Pop the bubble";
 
 //Shape for each upgrade option so costs, rates, and UI stay grouped together
 type Upgrade = {
@@ -103,8 +103,8 @@ const upgrades: Upgrade[] = upgradeConfigs.map((config) => {
 });
 
 // Sum the contribution from all owned upgrades to update the passive growth rate
-const recalculateGrowthRate = () => {
-  growthRate = upgrades.reduce(
+const recalculatepassiveIncomeRate = () => {
+  passiveIncomeRate = upgrades.reduce(
     (total, upgrade) => total + upgrade.count * upgrade.rate,
     0,
   );
@@ -114,7 +114,7 @@ const recalculateGrowthRate = () => {
 // Refresh upgrade button labels and disabled state based on current bubbles owned
 const updateUpgradeButtons = () => {
   upgrades.forEach((upgrade) => {
-    upgrade.button.disabled = pops < upgrade.cost;
+    upgrade.button.disabled = gameCurrency < upgrade.cost;
     const formattedCost = upgrade.cost.toFixed(1);
     upgrade.button.textContent =
       `${upgrade.id} — ${upgrade.description} | Cost: ${formattedCost} bubbles (+${upgrade.rate} bubbles/sec) | Owned: ${upgrade.count}`;
@@ -136,12 +136,12 @@ const updateStatusList = () => {
 //logic for what should happen when an upgrade is clicked
 upgrades.forEach((upgrade) => {
   upgrade.button.addEventListener("click", () => {
-    if (pops < upgrade.cost) return;
+    if (gameCurrency < upgrade.cost) return;
 
-    pops -= upgrade.cost;
+    gameCurrency -= upgrade.cost;
     upgrade.count += 1;
     upgrade.cost *= 1.15;
-    recalculateGrowthRate();
+    recalculatepassiveIncomeRate();
     updateCounter();
     updateStatusList();
     updateUpgradeButtons();
@@ -151,8 +151,8 @@ upgrades.forEach((upgrade) => {
 });
 
 //incremenet counter when bubble button is clicked, update upgrade button to track when enough bubbles are collected to unlock button
-bubbleButton.addEventListener("click", () => {
-  pops += 1;
+mainActionButton.addEventListener("click", () => {
+  gameCurrency += 1;
   updateCounter();
   updateUpgradeButtons();
 });
@@ -163,7 +163,7 @@ let lastTimestamp: number | null = null;
 const growContinuously = (timestamp: number) => {
   if (lastTimestamp !== null) {
     const deltaSeconds = (timestamp - lastTimestamp) / 1000;
-    pops += deltaSeconds * growthRate;
+    gameCurrency += deltaSeconds * passiveIncomeRate;
     updateCounter();
     updateUpgradeButtons();
   }
@@ -201,7 +201,7 @@ app.append(
   subtitle,
   counter,
   rateDisplay,
-  bubbleButton,
+  mainActionButton,
   upgradesTitle,
   upgradeList,
   statusSection,
