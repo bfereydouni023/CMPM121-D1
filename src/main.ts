@@ -1,44 +1,10 @@
 import "./style.css";
 
-//creating main element that will contain the clicker button
-const app = document.createElement("main");
-app.className = "app";
-
-//creating header element with the game title
-const title = document.createElement("h1");
-title.textContent = "Bubble Clicker";
-
-//creates subtitle element
-const subtitle = document.createElement("p");
-subtitle.className = "subtitle";
-subtitle.textContent = "Tap the bubble to start popping!";
-
-//set up counter variable, growth rate and bubble popped counter text
+// ===========================
+// === GAME STATE ===
+// ===========================
 let gameCurrency = 0;
 let passiveIncomeRate = 0;
-const counter = document.createElement("div");
-counter.className = "counter";
-const updateCounter = () => {
-  counter.textContent = `Bubbles popped: ${gameCurrency.toFixed(1)}`; //makes the number of bubbles only show up to the tenth position
-};
-updateCounter();
-
-// track and display the current growth rate
-const rateDisplay = document.createElement("p");
-rateDisplay.className = "rate-display";
-const updateRateDisplay = () => {
-  rateDisplay.textContent = `Growth rate: ${
-    passiveIncomeRate.toFixed(1)
-  } bubbles/sec`;
-};
-updateRateDisplay();
-
-//creates the clickable bubble button
-const mainActionButton = document.createElement("button");
-mainActionButton.type = "button";
-mainActionButton.className = "bubble-button";
-mainActionButton.textContent = "🫧";
-mainActionButton.ariaLabel = "Pop the bubble";
 
 //Shape for each upgrade option so costs, rates, and UI stay grouped together
 type Upgrade = {
@@ -51,7 +17,87 @@ type Upgrade = {
   statusLine: HTMLLIElement;
 };
 
-// Config for the three available upgrades with their costs and rates
+// ===========================
+// === DOM ELEMENTS ===
+// ===========================
+
+// Main container
+const app = document.createElement("main");
+app.className = "app";
+
+// Header and subtitle
+const title = document.createElement("h1");
+title.textContent = "Bubble Clicker";
+
+const subtitle = document.createElement("p");
+subtitle.className = "subtitle";
+subtitle.textContent = "Tap the bubble to start popping!";
+
+// Counter and rate display
+const counter = document.createElement("div");
+counter.className = "counter";
+
+const rateDisplay = document.createElement("p");
+rateDisplay.className = "rate-display";
+
+// Main action button
+const mainActionButton = document.createElement("button");
+mainActionButton.type = "button";
+mainActionButton.className = "bubble-button";
+mainActionButton.textContent = "🫧";
+mainActionButton.ariaLabel = "Pop the bubble";
+
+// Upgrade related elements
+const upgradesTitle = document.createElement("h2");
+upgradesTitle.className = "upgrade-heading";
+upgradesTitle.textContent = "Upgrades";
+
+const upgradeList = document.createElement("div");
+upgradeList.className = "upgrade-list";
+
+const statusList = document.createElement("ul");
+statusList.className = "upgrade-status";
+
+const statusSection = document.createElement("div");
+statusSection.className = "status-section";
+
+const statusHeading = document.createElement("p");
+statusHeading.className = "status-heading";
+statusHeading.textContent = "Owned upgrades:";
+
+// ===========================
+// === UPDATE FUNCTIONS ===
+// ===========================
+
+const updateCounter = () => {
+  counter.textContent = `Bubbles popped: ${gameCurrency.toFixed(1)}`;
+};
+
+const updateRateDisplay = () => {
+  rateDisplay.textContent = `Growth rate: ${passiveIncomeRate.toFixed(1)} bubbles/sec`;
+};
+
+const updateUpgradeButtons = () => {
+  upgrades.forEach((upgrade) => {
+    upgrade.button.disabled = gameCurrency < upgrade.cost;
+    const formattedCost = upgrade.cost.toFixed(1);
+    upgrade.button.textContent =
+      `${upgrade.id} — ${upgrade.description} | Cost: ${formattedCost} bubbles (+${upgrade.rate} bubbles/sec) | Owned: ${upgrade.count}`;
+  });
+};
+
+const updateStatusList = () => {
+  upgrades.forEach((upgrade) => {
+    upgrade.statusLine.textContent =
+      `${upgrade.id} (${upgrade.description}): ${upgrade.count}`;
+  });
+};
+
+// ===========================
+// === UPGRADE SYSTEM ===
+// ===========================
+
+// Config for the available upgrades with their costs and rates
 const upgradeConfigs = [
   {
     id: "Hire a friend!",
@@ -113,29 +159,18 @@ const recalculatepassiveIncomeRate = () => {
   updateRateDisplay();
 };
 
-// Refresh upgrade button labels and disabled state based on current bubbles owned
-const updateUpgradeButtons = () => {
-  upgrades.forEach((upgrade) => {
-    upgrade.button.disabled = gameCurrency < upgrade.cost;
-    const formattedCost = upgrade.cost.toFixed(1);
-    upgrade.button.textContent =
-      `${upgrade.id} — ${upgrade.description} | Cost: ${formattedCost} bubbles (+${upgrade.rate} bubbles/sec) | Owned: ${upgrade.count}`;
-  });
-};
+// ===========================
+// === EVENT LISTENERS ===
+// ===========================
 
-// List that summarizes how many of each upgrade the player owns
-const statusList = document.createElement("ul");
-statusList.className = "upgrade-status";
+// Main bubble button click handler
+mainActionButton.addEventListener("click", () => {
+  gameCurrency += 1;
+  updateCounter();
+  updateUpgradeButtons();
+});
 
-// Update function to keep the owned-count status list in sync with purchases
-const updateStatusList = () => {
-  upgrades.forEach((upgrade) => {
-    upgrade.statusLine.textContent =
-      `${upgrade.id} (${upgrade.description}): ${upgrade.count}`;
-  });
-};
-
-//logic for what should happen when an upgrade is clicked
+// Upgrade button click handlers
 upgrades.forEach((upgrade) => {
   upgrade.button.addEventListener("click", () => {
     if (gameCurrency < upgrade.cost) return;
@@ -152,14 +187,7 @@ upgrades.forEach((upgrade) => {
   statusList.append(upgrade.statusLine);
 });
 
-//incremenet counter when bubble button is clicked, update upgrade button to track when enough bubbles are collected to unlock button
-mainActionButton.addEventListener("click", () => {
-  gameCurrency += 1;
-  updateCounter();
-  updateUpgradeButtons();
-});
-
-//increment counter automatically based on elapsed time per animation frame
+// Continuous passive income growth
 let lastTimestamp: number | null = null;
 
 const growContinuously = (timestamp: number) => {
@@ -174,30 +202,23 @@ const growContinuously = (timestamp: number) => {
   requestAnimationFrame(growContinuously);
 };
 
-requestAnimationFrame(growContinuously);
+// ===========================
+// === INITIALIZATION ===
+// ===========================
 
-const upgradesTitle = document.createElement("h2");
-upgradesTitle.className = "upgrade-heading";
-upgradesTitle.textContent = "Upgrades";
+// Set initial display values
+updateCounter();
+updateRateDisplay();
+updateUpgradeButtons();
+updateStatusList();
 
-const upgradeList = document.createElement("div");
-upgradeList.className = "upgrade-list";
+// Populate upgrade list and status section
 upgrades.forEach((upgrade) => {
   upgradeList.append(upgrade.button);
 });
-
-const statusSection = document.createElement("div");
-statusSection.className = "status-section";
-
-const statusHeading = document.createElement("p");
-statusHeading.className = "status-heading";
-statusHeading.textContent = "Owned upgrades:";
-
 statusSection.append(statusHeading, statusList);
-updateStatusList();
-updateUpgradeButtons();
 
-//append the button, title and subtitle texts to the main element created prior
+// Append all elements to main container
 app.append(
   title,
   subtitle,
@@ -209,6 +230,9 @@ app.append(
   statusSection,
 );
 
-//add the widget containing the button and titles to the page
+// Add main container to page
 document.body.innerHTML = "";
 document.body.append(app);
+
+// Start the game loop
+requestAnimationFrame(growContinuously);
