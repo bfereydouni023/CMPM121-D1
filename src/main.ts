@@ -88,6 +88,12 @@ const updateUpgradeButtons = () => {
   });
 };
 
+//helper function to dry updating counter and upgrade button
+const refreshCurrencyUI = () => {
+  updateCounter();
+  updateUpgradeButtons();
+};
+
 const updateStatusList = () => {
   upgrades.forEach((upgrade) => {
     upgrade.statusLine.textContent =
@@ -168,8 +174,7 @@ const recalculatepassiveIncomeRate = () => {
 // Main bubble button click handler
 mainActionButton.addEventListener("click", () => {
   gameCurrency += 1;
-  updateCounter();
-  updateUpgradeButtons();
+  refreshCurrencyUI();
 });
 
 // Upgrade button click handlers
@@ -181,9 +186,8 @@ upgrades.forEach((upgrade) => {
     upgrade.count += 1;
     upgrade.cost *= 1.15;
     recalculatepassiveIncomeRate();
-    updateCounter();
     updateStatusList();
-    updateUpgradeButtons();
+    refreshCurrencyUI();
   });
 
   statusList.append(upgrade.statusLine);
@@ -196,8 +200,7 @@ const growContinuously = (timestamp: number) => {
   if (lastTimestamp !== null) {
     const deltaSeconds = (timestamp - lastTimestamp) / 1000;
     gameCurrency += deltaSeconds * passiveIncomeRate;
-    updateCounter();
-    updateUpgradeButtons();
+    refreshCurrencyUI();
   }
 
   lastTimestamp = timestamp;
@@ -209,10 +212,10 @@ const growContinuously = (timestamp: number) => {
 // ===========================
 
 // Set initial display values
-updateCounter();
+
 updateRateDisplay();
-updateUpgradeButtons();
 updateStatusList();
+refreshCurrencyUI();
 
 // Populate upgrade list and status section
 upgrades.forEach((upgrade) => {
