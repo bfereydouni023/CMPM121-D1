@@ -1,3 +1,6 @@
 # CMPM 121 D1 Project
 
-This is the starting point for your CMPM 121 D1 project. The goal of this project is to create a simple web application using TypeScript, Vite, and modern web development practices. Students should make sure to remove _this_ content from their README.md file and replace it with their own project documentation.
+Spongebob themed clicker game where you pop bubbles to get more upgrades to pop MORE BUBBLES!
+
+# Inspirations
+added title bounce, inspired by https://github.com/Illuminati-Cow/cmpm-121-f25-d1.

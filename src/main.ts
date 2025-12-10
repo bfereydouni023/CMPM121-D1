@@ -27,6 +27,7 @@ app.className = "app";
 
 // Header and subtitle
 const title = document.createElement("h1");
+title.className = "game-title";
 title.textContent = "Bubble Clicker";
 
 const subtitle = document.createElement("p");

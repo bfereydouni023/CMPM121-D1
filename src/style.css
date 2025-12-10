@@ -21,6 +21,38 @@ body {
   font-family: "Fredoka", "Inter", system-ui, -apple-system, sans-serif;
 }
 
+/* Title bounce animation inspired by Frog Clicker: https://github.com/mgembree/cmpm-121-f25-mattembree */
+.game-title {
+  margin: 0;
+  font-size: 32px;
+  letter-spacing: 0.6px;
+  color: #0f172a;
+  animation: bounce 2.2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40%,
+  43% {
+    transform: translateY(-12px);
+  }
+
+  70% {
+    transform: translateY(-6px);
+  }
+
+  90% {
+    transform: translateY(-2px);
+  }
+}
+
 /*Customizing the background of box containing the bubble button */
 .app {
   display: flex;
