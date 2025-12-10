@@ -27,7 +27,9 @@ updateCounter();
 const rateDisplay = document.createElement("p");
 rateDisplay.className = "rate-display";
 const updateRateDisplay = () => {
-  rateDisplay.textContent = `Growth rate: ${passiveIncomeRate.toFixed(1)} bubbles/sec`;
+  rateDisplay.textContent = `Growth rate: ${
+    passiveIncomeRate.toFixed(1)
+  } bubbles/sec`;
 };
 updateRateDisplay();
 
