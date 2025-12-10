@@ -74,7 +74,9 @@ const updateCounter = () => {
 };
 
 const updateRateDisplay = () => {
-  rateDisplay.textContent = `Growth rate: ${passiveIncomeRate.toFixed(1)} bubbles/sec`;
+  rateDisplay.textContent = `Growth rate: ${
+    passiveIncomeRate.toFixed(1)
+  } bubbles/sec`;
 };
 
 const updateUpgradeButtons = () => {
