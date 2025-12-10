@@ -8,3 +8,7 @@ Spongebob themed clicker game where you pop bubbles to gain upgrades that let yo
 
 - **Title Bounce**: Inspired by the [Frog Clicker game](https://github.com/mgembree/cmpm-121-f25-mattembree)
 - **Click Effects**: Inspired by the [Nuclear Click game](https://github.com/Illuminati-Cow/cmpm-121-f25-d1)
+
+## Extra Note
+
+I was working on these changes using my brothers laptop, changes made through Parsa contributer is me, didn't notice the change until after I pushed.
