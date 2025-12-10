@@ -176,7 +176,34 @@ const recalculatepassiveIncomeRate = () => {
 mainActionButton.addEventListener("click", () => {
   gameCurrency += 1;
   refreshCurrencyUI();
+  createBubbleBurst();
 });
+
+// Spawn floating bubble emojis when the main action button is pressed, inspired by https://github.com/Illuminati-Cow/cmpm-121-f25-d1
+const createBubbleBurst = () => {
+  const bubblesToCreate = 6;
+
+  for (let i = 0; i < bubblesToCreate; i += 1) {
+    const bubble = document.createElement("span");
+    bubble.className = "bubble-particle";
+    bubble.textContent = "🫧";
+
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 40 + Math.random() * 30;
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+
+    bubble.style.setProperty("--x", `${x}px`);
+    bubble.style.setProperty("--y", `${y}px`);
+
+    bubble.addEventListener("animationend", () => {
+      bubble.remove();
+    });
+
+    mainActionButton.append(bubble);
+  }
+};
+
 
 // Upgrade button click handlers
 upgrades.forEach((upgrade) => {

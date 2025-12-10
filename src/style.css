@@ -182,3 +182,21 @@ body {
 .upgrade-count {
   margin: 2px 0;
 }
+
+.bubble-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: bubble-pop 600ms ease-out forwards;
+  pointer-events: none;
+  font-size: 18px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+@keyframes bubble-pop {
+  to {
+    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0.9);
+    opacity: 0;
+  }
+}

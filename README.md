@@ -1,7 +1,10 @@
 # CMPM 121 D1 Project
 
-Spongebob themed clicker game where you pop bubbles to get more upgrades to pop MORE BUBBLES!
+## Overview
+
+Spongebob themed clicker game where you pop bubbles to gain upgrades that let you pop even more bubbles!
 
 ## Inspirations
 
-added title bounce, inspired by [link \[text\] link](https://github.com/mgembree/cmpm-121-f25-mattembree)
+- **Title Bounce**: Inspired by the [Frog Clicker game](https://github.com/mgembree/cmpm-121-f25-mattembree)
+- **Click Effects**: Inspired by the [Nuclear Click game](https://github.com/Illuminati-Cow/cmpm-121-f25-d1)
