@@ -196,7 +196,8 @@ body {
 
 @keyframes bubble-pop {
   to {
-    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0.9);
+    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y)))
+      scale(0.9);
     opacity: 0;
   }
 }

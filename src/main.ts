@@ -204,7 +204,6 @@ const createBubbleBurst = () => {
   }
 };
 
-
 // Upgrade button click handlers
 upgrades.forEach((upgrade) => {
   upgrade.button.addEventListener("click", () => {
