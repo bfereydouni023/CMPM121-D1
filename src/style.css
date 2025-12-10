@@ -183,7 +183,7 @@ body {
   margin: 2px 0;
 }
 
-.bubble-particle {
+.bubble-particle { /*bubble particle for click effect, inspired by https://github.com/Illuminati-Cow/cmpm-121-f25-d1 */
   position: absolute;
   left: 50%;
   top: 50%;
